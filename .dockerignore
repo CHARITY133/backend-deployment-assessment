@@ -1,0 +1,14 @@
+.git
+.gitignore
+terraform/
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+node_modules/
+dist/
+Dockerfile
+docker-compose.yml
+README.md
+evidence/

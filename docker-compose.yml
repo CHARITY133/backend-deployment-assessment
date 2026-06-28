@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: startuptech-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+  backend:
+    image: charity111/muchtodo-backend:latest
+    container_name: startuptech-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - MONGO_URI=mongodb://mongodb:27017/muchtodo
+      - DB_NAME=muchtodo
+      - JWT_SECRET_KEY=supersecretkey
+      - JWT_EXPIRATION_HOURS=72
+      - ENABLE_CACHE=false
+      - LOG_LEVEL=info
+      - LOG_FORMAT=json
+    networks:
+      - app-network
+    depends_on:
+      - mongodb
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  mongo_data:
